@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     public float jumpVelocity;
     public float lowJumpMultiplier = 2.0F;
     public float downSpeed;
+    public float characterSize0;
+    public float characterSize1;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +24,8 @@ public class Player : MonoBehaviour
         moveSpeed = 20F;
         jumpPower = 5000F;
         downSpeed = -250F;
+        characterSize0 = (0, 1, -1);
+        characterSize1 = (0, -1, 1);
     }
 
     // Update is called once per frame
