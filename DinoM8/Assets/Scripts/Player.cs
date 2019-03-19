@@ -22,22 +22,39 @@ public class Player : MonoBehaviour
         moveSpeed = 20F;
         jumpPower = 5000F;
         downSpeed = -250F;
+        CharacterSize0 = 0;
+        CharacterSize1 = 0;
     }
-
     // Update is called once per frame
     void update()
     { 
-        
+         if(CharacterSize1 > 2){
+                if(CharacterSize0 < 1){
+                    CharacterSize0 = 0;
+                }
+                    CharacterSize0 = 0;
+                    transform.localScale += new Vector3(0, 0, CharacterSize0 - 1);
+                }
+                
     }
     void FixedUpdate()
     {  
-        
+        //////////////////////////////////////////
+        //                                      //
+        //               Movement               //
+        //                                      //
+        //////////////////////////////////////////
+          
          if(Input.GetKeyDown("s")){
              rb.AddForce(0, downSpeed, 0);
-             transform.localScale += new Vector3(0, -1, 1);
+             transform.localScale += new Vector3(0, CharacterSize1 - 1, CharacterSize0 + 1);
          }
          if(Input.GetKeyUp("s")){
-             transform.localScale += new Vector3(0, 1, -1);
+             transform.localScale += new Vector3(0, CharacterSize1 + 1, CharacterSize0 - 1);
+                
+         }
+         if(Input.GetKeyUp("space")){
+             rb.AddForce(0, downSpeed, 0);
          }
          transform.Translate(moveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime, 0,0);
          rb.AddForce(0, 0, moveSpeed);
@@ -50,5 +67,8 @@ public class Player : MonoBehaviour
                  }
             }
         }
+
+
+
     }   
 }
