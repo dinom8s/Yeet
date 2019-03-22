@@ -8,12 +8,10 @@ public class Player : MonoBehaviour
     public Rigidbody rb;
     public float moveSpeed;
     public float jumpPower;
-    public float verticalSpeed = 2.0F;
-    public float horizontalSpeed = 2.0F;
-    public float fallMultiplier = 2.5F;
-    public float jumpVelocity;
-    public float lowJumpMultiplier = 2.0F;
     public float downSpeed;
+    public float CharacterSize0;
+    public float CharacterSize1;
+
     
     // Start is called before the first frame update
     void Start()
@@ -28,13 +26,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void update()
     { 
-         if(CharacterSize1 > 2){
-                if(CharacterSize0 < 1){
-                    CharacterSize0 = 0;
-                }
-                    CharacterSize0 = 0;
-                    transform.localScale += new Vector3(0, 0, CharacterSize0 - 1);
-                }
                 
     }
     void FixedUpdate()
