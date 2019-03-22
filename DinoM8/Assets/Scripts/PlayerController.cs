@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         moveSpeed = 20F;
-        jumpForce = 25F;
+        jumpForce = 20F;
         gravityScale = 0.1F;
 
     }
