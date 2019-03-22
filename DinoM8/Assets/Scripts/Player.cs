@@ -2,64 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
-{   
-    /// Kan vi se denna=
-    public Rigidbody rb;
+public class PlayerController : MonoBehaviour
+{
     public float moveSpeed;
-    public float jumpPower;
-    public float downSpeed;
-    public float CharacterSize0;
-    public float CharacterSize1;
+    public float jumpForce;
+    public CharacterController controller;
 
-    
-    // Start is called before the first frame update
+    public float gravityScale;
+    private Vector3 moveDirection;
+    private bool isMoving = true;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        moveSpeed = 20F;
-        jumpPower = 5000F;
-        downSpeed = -250F;
-        CharacterSize0 = 0;
-        CharacterSize1 = 0;
+        controller = GetComponent<CharacterController>();
     }
-    // Update is called once per frame
-    void update()
-    { 
-                
-    }
-    void FixedUpdate()
-    {  
-        //////////////////////////////////////////
-        //                                      //
-        //               Movement               //
-        //                                      //
-        //////////////////////////////////////////
-          
-         if(Input.GetKeyDown("s")){
-             rb.AddForce(0, downSpeed, 0);
-             transform.localScale += new Vector3(0, CharacterSize1 - 1, CharacterSize0 + 1);
-         }
-         if(Input.GetKeyUp("s")){
-             transform.localScale += new Vector3(0, CharacterSize1 + 1, CharacterSize0 - 1);
-                
-         }
-         if(Input.GetKeyUp("space")){
-             rb.AddForce(0, downSpeed, 0);
-         }
-         transform.Translate(moveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime, 0,0);
-         rb.AddForce(0, 0, moveSpeed);
-         RaycastHit hit = new RaycastHit();
-         if (Physics.Raycast (transform.position, -Vector3.up, out hit)) {
-             float distanceToGround = hit.distance;
-                    if(distanceToGround < transform.localScale.y + 0.0001){
-                     if(Input.GetAxis("Jump") > 0) {
-                        rb.AddForce(0, jumpPower * Time.deltaTime, 0);
-                 }
+
+    void Update()
+    {
+        if(isMoving == true) {
+            moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
+
+
+            if(Input.GetKeyDown(KeyCode.LeftShift)) {
+                gravityScale = 0.5F;
             }
+            if(Input.GetKeyUp(KeyCode.LeftShift)){
+                gravityScale = 0.1F;
+            }
+
+
+            if (controller.isGrounded)
+            {
+
+
+                if(Input.GetKeyDown(KeyCode.Space))
+                {
+                    moveDirection.y = jumpForce;
+                } 
+            } 
+
+
+            moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale);
+            controller.Move(moveDirection * Time.deltaTime);
+
+            if(Input.GetKeyDown(KeyCode.Space)){
+            // transform.position = new Vector3(0, 100, 0);
+                //it is being called everytime our capsule hits somthing 
+
+
+            } 
         }
-
-
-
-    }   
+    } 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+           {
+               if(hit.point.z > transform.position.z + controller.radius)
+               {
+                   Death();
+               }
+           }
+           private void Death()
+           {
+                transform.position = new Vector3(0,2,-51);
+               // isMoving = false;
+                //moveDirection.enabled=false;
+           }
 }
