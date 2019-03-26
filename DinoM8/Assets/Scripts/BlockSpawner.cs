@@ -7,24 +7,31 @@ public class BlockSpawner : MonoBehaviour
     
     public Transform[] spawnPoints;
     public GameObject blockPrefab;
+    public float TimeBetweenBlocks = 1F;
+    private float TimeToSpawn = 1F;
     void Start()
     {
         
-        int randomIndex = Random.Range(0, spawnPoints.Length);
-        
-        for(int i = 0; i < spawnPoints.Length; i++)
-        {
-            if(randomIndex != i)
-            {
-                Instantiate(blockPrefab, spawnPoints[i].position, Quaternion.identity);
-            }
-        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Time.time >= TimeToSpawn){
+        SpawnBlocks();     
+        TimeToSpawn = Time.time + TimeBetweenBlocks;
+        }  
+    }
+    void SpawnBlocks () 
+    {
+        int randomInedex = Random.Range(0, spawnPoints.Length);
+        for(int i = 0; i < spawnPoints.Length; i++)
+                {
+                    if(randomInedex != i){
+                        Instantiate(blockPrefab, spawnPoints[i].position, Quaternion.identity);
+                    }
+                }
+
     }
 }

@@ -15,14 +15,13 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         moveSpeed = 20F;
-        jumpForce = 20F;
+        jumpForce = 25F;
         gravityScale = 0.1F;
 
     }
 
     void Update()
     {
-        
         if(isMoving == true) {
             moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
 
