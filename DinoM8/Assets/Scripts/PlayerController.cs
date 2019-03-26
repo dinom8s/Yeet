@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
     public float jumpForce;
+
+    public float speed = 50f;
     public CharacterController controller;
 
     public float gravityScale;
@@ -23,7 +25,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if(isMoving == true) {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
+            moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, speed);
 
 
             if(Input.GetKeyDown(KeyCode.LeftShift)) {
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
            }
            private void Death()
            {
-                transform.position = new Vector3(0,2,-51);
+                transform.position = new Vector3(0,3.47f,0);
                // isMoving = false;
                 //moveDirection.enabled=false;
            }
