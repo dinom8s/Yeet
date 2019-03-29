@@ -6,9 +6,9 @@ public class BlockSpawner : MonoBehaviour
     // Start is called before the first frame update
     
     public Transform[] spawnPoints;
-    public GameObject blockPrefab;
-    public float TimeBetweenBlocks = 1F;
-    private float TimeToSpawn = 1F;
+    public GameObject[] blockPrefabs;
+    public float TimeBetweenBlocks = 0.35F;
+    private float TimeToSpawn = 1.35F;
     void Start()
     {
         
@@ -25,12 +25,11 @@ public class BlockSpawner : MonoBehaviour
     }
     void SpawnBlocks () 
     {
-        int randomInedex = Random.Range(0, spawnPoints.Length);
         for(int i = 0; i < spawnPoints.Length; i++)
                 {
-                    if(randomInedex != i){
-                        Instantiate(blockPrefab, spawnPoints[i].position, Quaternion.identity);
-                    }
+                    
+            int randomIndex = Random.Range(0, blockPrefabs.Length);
+                     Instantiate(blockPrefabs[randomIndex], spawnPoints[i].position, Quaternion.identity);
                 }
 
     }
