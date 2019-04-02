@@ -9,6 +9,7 @@ public class BlockSpawner : MonoBehaviour
     public GameObject[] blockPrefabs;
     public float TimeBetweenBlocks = 0.35F;
     private float TimeToSpawn = 1.35F;
+    private float TimeToSpawnRandom = 10f;
     void Start()
     {
         
@@ -18,10 +19,27 @@ public class BlockSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time >= TimeToSpawn){
-        SpawnBlocks();     
-        TimeToSpawn = Time.time + TimeBetweenBlocks;
-        }  
+        if(Time.time >= TimeToSpawn)
+        {
+            SpawnBlocks();
+            TimeToSpawn = Time.time + TimeBetweenBlocks;
+            
+        } 
+        
+            if(Time.time >= TimeToSpawnRandom)
+            {
+                int randomSpawn = Random.Range(0, 10);
+                //Debug.Log(randomSpawn); //detta skriver in ranodmindexen i consolen. Detta gör jag för att kolla så random.range fungerade som jag
+                if(randomSpawn == 1)
+                {
+                    SpawnBlocks();
+                    
+                    TimeToSpawnRandom = Time.time + TimeBetweenBlocks;
+                }
+            
+        }
+        
+    
     }
     void SpawnBlocks () 
     {

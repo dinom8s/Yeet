@@ -36,7 +36,7 @@ public class SpawnerScript : MonoBehaviour
                     //if(randomInedex != i){
                         Vector3 pos2 = new Vector3(0, 0, 0);
                         if(randomIndex == 1) {
-                            pos2 = new Vector3(0, 2, 0);
+                            pos2 = new Vector3(0, 2.5f, 1.5f);
                         }
                         Instantiate(blockPrefabs[randomIndex], spawnPoints[i].position+pos2, Quaternion.identity);
                     //}

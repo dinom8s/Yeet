@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour
     public float gravityScale;
     private Vector3 moveDirection;
     private bool isMoving = true;
-    public float acceleration = 1.2f;
+    public float acceleration = 1.5f;
     public GameObject spawnpoint;
+    private float Faster = 2f;
     
     void Start()
     {
@@ -27,16 +28,22 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+    
+        if(Time.time == Faster)
+        {
+            speed = speed + 20;
+            Debug.Log("Faster Faster Faster");
+        }
         if(isMoving == true) {
             moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, speed);
             //moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
 
             speed += Time.deltaTime * acceleration;
 
-            if(Input.GetKeyDown(KeyCode.LeftShift)) {
+            if(Input.GetKeyDown(KeyCode.S)) {
                 gravityScale = 0.5F;
             }
-            if(Input.GetKeyUp(KeyCode.LeftShift)){
+            if(Input.GetKeyUp(KeyCode.S)){
                 gravityScale = 0.1F;
             }
 
@@ -77,9 +84,10 @@ void OnControllerColliderHit(ControllerColliderHit hit)
             {
                transform.position = spawnpoint.transform.position;
                
-               moveSpeed = 0f;
-               speed = 0f;
-               jumpForce = 0f;
-               acceleration = 0f;
+                moveSpeed = 20f;
+                speed = 20f;
+                acceleration = 1.5f;
+                jumpForce = 25f;
             }
+            
 }
