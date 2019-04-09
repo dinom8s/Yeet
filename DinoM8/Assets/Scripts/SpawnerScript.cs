@@ -8,24 +8,22 @@ public class SpawnerScript : MonoBehaviour
     public Transform[] spawnPoints;
     public GameObject[] blockPrefabs;
     public float TimeBetweenBlocks = 1F;
-    private float TimeToSpawn = 10F;
-
-    public SpawnerScript()
-    {
-    }
+    public float TimeToSpawn = 10F;
+    public float TimeToStart = 0f;
 
     void Start()
     {
-        
+        TimeToSpawn = Time.time + 10F;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.time >= TimeToSpawn){
-        SpawnBlocks();     
-        TimeToSpawn = Time.time + TimeBetweenBlocks;
+        
+        if(Time.time + TimeToStart >= TimeToSpawn){
+            SpawnBlocks();
+            TimeToSpawn = Time.time + TimeToStart + TimeBetweenBlocks;
         }  
     }
     void SpawnBlocks () 

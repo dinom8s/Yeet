@@ -15,10 +15,11 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = true;
     public float acceleration = 1.5f;
     public GameObject spawnpoint;
-    private float Faster = 2f;
-    
+    public BlockSpawner bs;
+    public SpawnerScript ss;
     void Start()
     {
+        Time.timeScale = 0;
         controller = GetComponent<CharacterController>();
         moveSpeed = 20f;
         speed = 20f;
@@ -28,44 +29,42 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-    
-        if(Time.time == Faster)
+
+        if(Input.anyKeyDown)
         {
-            speed = speed + 20;
-            Debug.Log("Faster Faster Faster");
+            Time.timeScale = 1;
         }
+        
+        //Debug.Log(Time.timeScale);
+    
         if(isMoving == true) {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, speed);
-            //moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
+                moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, speed);
 
-            speed += Time.deltaTime * acceleration;
+                speed += Time.deltaTime * acceleration;
 
-            if(Input.GetKeyDown(KeyCode.S)) {
-                gravityScale = 0.5F;
-            }
-            if(Input.GetKeyUp(KeyCode.S)){
-                gravityScale = 0.1F;
-            }
+                if(Input.GetKeyDown(KeyCode.S)) {
+                    gravityScale = 0.5F;
+                }
+                if(Input.GetKeyUp(KeyCode.S)){
+                    gravityScale = 0.1F;
+                }
 
 
-            if (controller.isGrounded)
-            {
+                if (controller.isGrounded)
+                {
 
 
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
                     moveDirection.y = jumpForce;
                 } 
+            
             } 
 
 
             moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale);
             controller.Move(moveDirection * Time.deltaTime);
 
-            if(Input.GetKeyDown(KeyCode.Space)){
-            // transform.position = new Vector3(0, 100, 0);
-                //it is being called everytime our capsule hits somthing 
-            } 
         }
     }
 void OnControllerColliderHit(ControllerColliderHit hit)
@@ -73,21 +72,19 @@ void OnControllerColliderHit(ControllerColliderHit hit)
             if (hit.gameObject.tag == "Blocker") 
             {
                 Death();
-                /*moveSpeed = 0f;
-                speed = 0f;
-                jumpForce = 0f; */
+                
                 }
 
             }
-            
-           private void Death()
+
+    private void Death()
             {
-               transform.position = spawnpoint.transform.position;
-               
-                moveSpeed = 20f;
-                speed = 20f;
-                acceleration = 1.5f;
-                jumpForce = 25f;
+                 Application.LoadLevel(Application.loadedLevel);
+                 Debug.Log(bs.TimeToStart);
+                 bs.TimeToStart = Time.time;
+                 ss.TimeToStart = Time.time;
+                 Time.timeScale = 0;
+                 
             }
             
 }
