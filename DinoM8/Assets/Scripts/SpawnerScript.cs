@@ -8,24 +8,22 @@ public class SpawnerScript : MonoBehaviour
     public Transform[] spawnPoints;
     public GameObject[] blockPrefabs;
     public float TimeBetweenBlocks = 1F;
-    private float TimeToSpawn = 10F;
-
-    public SpawnerScript()
-    {
-    }
+    public float TimeToSpawn = 10F;
+    public float TimeToStart = 0f;
 
     void Start()
     {
-        
+        TimeToSpawn = Time.time + 10F;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.time >= TimeToSpawn){
-        SpawnBlocks();     
-        TimeToSpawn = Time.time + TimeBetweenBlocks;
+        
+        if(Time.time + TimeToStart >= TimeToSpawn){
+            SpawnBlocks();
+            TimeToSpawn = Time.time + TimeToStart + TimeBetweenBlocks;
         }  
     }
     void SpawnBlocks () 
@@ -36,7 +34,7 @@ public class SpawnerScript : MonoBehaviour
                     //if(randomInedex != i){
                         Vector3 pos2 = new Vector3(0, 0, 0);
                         if(randomIndex == 1) {
-                            pos2 = new Vector3(0, 2, 0);
+                            pos2 = new Vector3(0, 2.5f, 1.5f);
                         }
                         Instantiate(blockPrefabs[randomIndex], spawnPoints[i].position+pos2, Quaternion.identity);
                     //}
