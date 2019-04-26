@@ -34,12 +34,12 @@ public class BlockSpawner : MonoBehaviour
               //  Debug.Log(TimeToStart);
                 int randomSpawn = Random.Range(0, 10);
                // Debug.Log(randomSpawn); //detta skriver in ranodmindexen i consolen. Detta gör jag för att kolla så random.range fungerade som jag
-                if(randomSpawn == 1)
-                {
-                    SpawnBlocks();
+                //if(randomSpawn == 1)
+                //{
+                  //  SpawnBlocks();
                     
-                    TimeToSpawnRandom = Time.time + TimeToStart + TimeBetweenBlocks;
-                } 
+                    //TimeToSpawnRandom = Time.time + TimeToStart + TimeBetweenBlocks;
+                //} 
             
         }
         

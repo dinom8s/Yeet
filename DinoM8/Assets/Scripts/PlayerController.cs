@@ -1,22 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     public float moveSpeed;
     public float jumpForce;
 
     public float speed = 50f;
     public CharacterController controller;
+    public bool startTimer = false;
 
     public float gravityScale;
     private Vector3 moveDirection;
     private bool isMoving = true;
     public float acceleration = 1.5f;
-    public GameObject spawnpoint;
     public BlockSpawner bs;
     public SpawnerScript ss;
+    private NetworkManager net;
+
     void Start()
     {
         Time.timeScale = 0;
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour
         if(Input.anyKeyDown)
         {
             Time.timeScale = 1;
+            GameObject.Find("Score").GetComponent<Score>().timer = true;
         }
         
         //Debug.Log(Time.timeScale);
@@ -49,10 +53,8 @@ public class PlayerController : MonoBehaviour
                     gravityScale = 0.1F;
                 }
 
-
                 if (controller.isGrounded)
                 {
-
 
                 if(Input.GetKeyDown(KeyCode.Space))
                 {
@@ -69,22 +71,31 @@ public class PlayerController : MonoBehaviour
     }
 void OnControllerColliderHit(ControllerColliderHit hit)
            {
-            if (hit.gameObject.tag == "Blocker") 
-            {
-                Death();
-                
+                if (hit.gameObject.tag == "Blocker") 
+                {
+                    Death();   
                 }
+                       
+                if (hit.gameObject.tag == "Finish") 
+                {
+                    moveSpeed = 0f;
+                    speed = 0f;
+                    jumpForce = 0f; 
+                    GameObject.Find("Booster").GetComponent<Boost>().BonusSpeed = 0;
+                    GameObject.Find("ScoreText").GetComponent<Score>().scoreValue = 0;
 
-            }
-
+                }
+            } 
     private void Death()
             {
                  Application.LoadLevel(Application.loadedLevel);
-                 Debug.Log(bs.TimeToStart);
+//                 Debug.Log(bs.TimeToStart);
                  bs.TimeToStart = Time.time;
                  ss.TimeToStart = Time.time;
-                 Time.timeScale = 0;
-                 
+                 Time.timeScale = 0;                        
+                 GameObject.Find("Score").GetComponent<Score>().timer = false;
+                //transform.position = GameObject.Find("spawnpoint").transform.position;        
             }
             
+
 }
